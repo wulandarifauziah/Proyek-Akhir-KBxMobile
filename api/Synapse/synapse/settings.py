@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-%la_a@!mg(5uwt5#to)=xzazb!-gm=a5g-aant!rld1!hy@&0h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'pakbmobile.loca.lt'
+]
 
 
 # Application definition
