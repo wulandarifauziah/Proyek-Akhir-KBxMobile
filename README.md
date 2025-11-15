@@ -62,7 +62,7 @@ Server Django harus dijalankan menggunakan `0.0.0.0` untuk fleksibilitas jaringa
     ```bash
     python manage.py runserver 0.0.0.0:8000
     ```
-    > Server harus tetap berjalan selama Anda menggunakan aplikasi mobile.
+    > Server harus tetap berjalan selama masih menggunakan aplikasi mobile.
 
 ### 📱 Persiapan Frontend (Flutter Mobile)
 
