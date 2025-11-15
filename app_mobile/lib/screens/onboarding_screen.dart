@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../config/routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -44,11 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0xFFFFFFFF),
-            Color(0xFFE1E5F2),
-            Color(0xFFBFDBF7),
-          ],
+          colors: [Color(0xFFFFFFFF), Color(0xFFE1E5F2), Color(0xFFBFDBF7)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -60,10 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 24.0, bottom: 32.0),
-                child: Image.asset(
-                  'assets/logo_geoscan.png',
-                  height: 80,
-                ),
+                child: Image.asset('assets/logo_geoscan.png', height: 80),
               ),
               Expanded(
                 child: PageView.builder(
@@ -117,7 +109,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     child: const Text(
                       'Lewati',
-                      style: TextStyle(color: Color(0xFF1F7A8C), fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        color: Color(0xFF1F7A8C),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

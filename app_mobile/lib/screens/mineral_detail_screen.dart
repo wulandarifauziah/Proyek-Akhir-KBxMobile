@@ -11,7 +11,6 @@ class MineralDetailScreen extends StatelessWidget {
     this.imagePath,
   });
 
-  // --- DATA DETAIL MINERAL LENGKAP --- (Dibiarkan sama dari perbaikan sebelumnya)
   static const Map<String, dynamic> _mineralDetails = {
     'Pyrite': {
       'formula': 'FeS₂ (Besi Sulfida)',
@@ -160,21 +159,17 @@ class MineralDetailScreen extends StatelessWidget {
       'location':
           'Kongo (Republik Demokratik Kongo), Rusia, Australia, dan AS (Arizona).',
     },
-    // Tambahkan mineral lain di sini jika diperlukan
   };
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    // ⬅️ PENENTUAN IMAGE PATH YANG DINAMIS
     final String assetFileName = '${mineralName.toLowerCase()}.jpg';
     final String defaultAssetPath = 'assets/$assetFileName';
 
-    // Gunakan imagePath yang diteruskan (dari hasil prediksi) atau gunakan aset default
     final String finalImagePath = imagePath ?? defaultAssetPath;
 
-    // LOGIKA UTAMA: Mengambil data yang sesuai dengan mineralName.
     final detail = _mineralDetails[mineralName] ?? _mineralDetails['Pyrite']!;
     final List<Map<String, String>> physicDetails = (detail['physic'] as List)
         .cast<Map<String, String>>();
@@ -203,7 +198,6 @@ class MineralDetailScreen extends StatelessWidget {
                 ),
               ),
               centerTitle: true,
-              // ⬅️ Meneruskan finalImagePath yang sudah ditentukan
               background: _buildAppBarBackground(colorScheme, finalImagePath),
             ),
           ),
@@ -222,7 +216,6 @@ class MineralDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // MENGGUNAKAN DATA DINAMIS
                   Text(
                     detail['formula'] as String,
                     style: const TextStyle(
@@ -232,15 +225,11 @@ class MineralDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-
-                  // MENGGUNAKAN DATA DINAMIS
                   _buildSection(
                     colorScheme,
                     'Ringkasan',
                     detail['summary'] as String,
                   ),
-
-                  // MENGGUNAKAN DATA DINAMIS (Looping Sifat Fisik)
                   _buildExpandableSection(
                     'Sifat Fisik Utama',
                     Column(
@@ -257,7 +246,6 @@ class MineralDetailScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // MENGGUNAKAN DATA DINAMIS (Looping Karakteristik Kristal)
                   _buildExpandableSection(
                     'Karakteristik Kristal',
                     Column(
@@ -274,7 +262,6 @@ class MineralDetailScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // MENGGUNAKAN DATA DINAMIS
                   _buildExpandableSection(
                     'Kegunaan',
                     Text(
@@ -283,7 +270,6 @@ class MineralDetailScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // MENGGUNAKAN DATA DINAMIS
                   _buildExpandableSection(
                     'Lokasi Temuan Populer',
                     Text(
@@ -301,8 +287,6 @@ class MineralDetailScreen extends StatelessWidget {
       ),
     );
   }
-
-  // --- WIDGET HELPER LAINNYA (Sama seperti sebelumnya) ---
 
   Widget _buildSection(ColorScheme colorScheme, String title, String content) {
     return Column(
@@ -390,22 +374,20 @@ class MineralDetailScreen extends StatelessWidget {
     );
   }
 
-  // ⬅️ WIDGET INI DILENGKAPI DENGAN ARGUMEN imagePath
   Widget _buildAppBarBackground(ColorScheme colorScheme, String imagePath) {
     if (imagePath.isEmpty) {
       return _buildPlaceholder(colorScheme);
     }
 
-    // Mengambil imagePath yang sudah difinalisasi
     final bool isAssetImage = imagePath.startsWith('assets/');
     final Widget imageWidget = isAssetImage
         ? Image.asset(
-            imagePath, // Menggunakan jalur aset dinamis
+            imagePath,
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => _buildPlaceholder(colorScheme),
           )
         : Image.file(
-            File(imagePath), // Menggunakan jalur file lokal
+            File(imagePath),
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => _buildPlaceholder(colorScheme),
           );

@@ -1,5 +1,3 @@
-// lib/screens/home/settings_view.dart (Halaman Info/Pengaturan)
-
 import 'package:flutter/material.dart';
 
 class SettingsView extends StatelessWidget {

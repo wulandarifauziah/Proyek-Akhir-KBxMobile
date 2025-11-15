@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../config/routes.dart';
 import '../theme/theme_controller.dart';
 // ⬅️ DITAMBAHKAN: Perlu diimpor untuk logika API dan model data
-import '../services/api_service.dart'; // Sesuaikan path jika berbeda
-import '../models/prediction_model.dart'; // Sesuaikan path jika berbeda
+import '../services/api_service.dart';
+import '../models/prediction_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,7 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
         );
         return; // Hentikan proses lebih lanjut
       }
-      // 3. Sukses: Navigasi ke ResultScreen
+
+      // 4. Sukses: Navigasi ke ResultScreen
       if (!mounted) return;
 
       Navigator.pushNamed(
@@ -78,13 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       );
     } catch (error) {
-      // 4. Gagal: Tampilkan Error
+      // 5. Gagal: Tampilkan Error
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal prediksi: ${error.toString()}')),
       );
     } finally {
-      // 5. Sembunyikan Loading
+      // 6. Sembunyikan Loading
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -94,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showTipsDialog(BuildContext context) {
-    // ... (tidak ada perubahan pada dialog)
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

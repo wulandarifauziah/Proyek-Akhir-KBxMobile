@@ -12,12 +12,6 @@ class ApiService {
     defaultValue: '',
   );
 
-  /// If [baseUrl] is provided it will be used directly. Otherwise the
-  /// client chooses a sensible default per platform:
-  /// - Web: http://{host-browser}:8000
-  /// - Android emulator: http://10.0.2.2:8000
-  /// - iOS simulator / desktop: http://127.0.0.1:8000
-  /// Set API_BASE_URL (via --dart-define) to override these defaults.
   ApiService({http.Client? client, String? baseUrl})
     : _client = client ?? http.Client(),
       _baseUrl = (baseUrl != null && baseUrl.isNotEmpty)
@@ -29,7 +23,6 @@ class ApiService {
 
   Uri get _predictUri {
     if (_baseUrl != null && _baseUrl.isNotEmpty) {
-      // Keep the scheme and host intact; only remove trailing slashes.
       final clean = _baseUrl.replaceAll(RegExp(r"/+$"), '');
       return Uri.parse('$clean/api/predict-image');
     }
@@ -38,7 +31,6 @@ class ApiService {
       final base = Uri.base;
       const scheme = 'http';
       final host = base.host.isNotEmpty ? base.host : '127.0.0.1';
-      // final host = base.host.isNotEmpty ? base.host : '0.0.0.0';
       const int defaultPort = 8000;
       return Uri(
         scheme: scheme,
@@ -48,29 +40,23 @@ class ApiService {
       );
     }
 
-    // Android emulator needs to map to host machine using 10.0.2.2
     if (Platform.isAndroid) {
-      // return Uri.parse('http://10.156.90.86:8000/api/predict-image');
-      return Uri.parse('http://192.168.1.5:8000/api/predict-image');
+      return Uri.parse('http://10.156.90.86:8000/api/predict-image');
+      // return Uri.parse('http://192.168.1.5:8000/api/predict-image');
     }
 
-    // iOS simulator / desktop
     return Uri.parse('http://127.0.0.1:8000/api/predict-image');
   }
 
   Future<PredictionResult> predictImage(XFile imageFile) async {
     final mediaType = _resolveMediaType(imageFile.name);
 
-    // Try with a short timeout and a single retry to reduce flakiness.
     const Duration requestTimeout = Duration(seconds: 20);
     int attempt = 0;
     http.Response response;
     while (true) {
       attempt += 1;
       try {
-        // Build a fresh MultipartRequest for each attempt. MultipartRequest
-        // objects can't be sent more than once (they become finalized), so
-        // recreate it on retry.
         final request = http.MultipartRequest('POST', _predictUri)
           ..headers['Accept'] = 'application/json';
 
@@ -94,8 +80,6 @@ class ApiService {
           );
         }
 
-        // Helpful debug log for developer
-        // ignore: avoid_print
         print('API: POST $_predictUri (isWeb=$kIsWeb) attempt=$attempt');
 
         final streamedResponse = await _client
@@ -104,7 +88,6 @@ class ApiService {
 
         response = await http.Response.fromStream(streamedResponse);
 
-        // ignore: avoid_print
         print('API response ${response.statusCode}: ${response.body}');
         break;
       } catch (e) {
@@ -133,7 +116,6 @@ class ApiService {
           );
         }
 
-        // Otherwise wait a short moment and retry
         await Future.delayed(const Duration(milliseconds: 300));
       }
     }

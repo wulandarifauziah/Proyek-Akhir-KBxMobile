@@ -79,18 +79,13 @@ class HistoryService {
     // Tambahkan item baru di posisi paling atas (index 0)
     historyList.insert(0, item);
 
-    // Batasi jumlah riwayat (opsional, misalnya 50 item terakhir)
-    // if (historyList.length > 50) {
-    //   historyList = historyList.take(50).toList();
-    // }
-
     final List<Map<String, dynamic>> updatedHistoryJson = historyList
         .map((item) => item.toJson())
         .toList();
     await prefs.setString(_historyKey, jsonEncode(updatedHistoryJson));
   }
 
-  // Mengambil semua item riwayat (DIGUNAKAN DI SCREEN INI)
+  // Mengambil semua item riwayat
   Future<List<HistoryItem>> getHistory() async {
     final prefs = await SharedPreferences.getInstance();
     final String? historyString = prefs.getString(_historyKey);
@@ -221,7 +216,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           IconButton(
             icon: const Icon(Icons.delete_sweep_outlined),
             onPressed: () async {
-              // Tambahkan konfirmasi penghapusan (opsional tapi disarankan)
+              // Tambahkan konfirmasi penghapusan
               final confirmed = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -251,9 +246,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   _historyList = [];
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Semua riwayat telah dihapus.'),
-                  ),
+                  const SnackBar(content: Text('Semua riwayat telah dihapus.')),
                 );
               }
             },
@@ -349,176 +342,3 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 }
-//   // Dialog konfirmasi hapus riwayat
-//   Future<void> _confirmClearHistory() async {
-//     final confirmed = await showDialog<bool>(
-//       context: context,
-//       builder: (context) => AlertDialog(
-//         title: const Text('Hapus Semua Riwayat?'),
-//         content: const Text(
-//           'Anda yakin ingin menghapus semua riwayat pemindaian Anda? Aksi ini tidak dapat dibatalkan.',
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.of(context).pop(false),
-//             child: const Text('Batal'),
-//           ),
-//           FilledButton(
-//             onPressed: () => Navigator.of(context).pop(true),
-//             style: FilledButton.styleFrom(backgroundColor: Colors.red),
-//             child: const Text('Hapus'),
-//           ),
-//         ],
-//       ),
-//     );
-
-//     if (confirmed == true) {
-//       await _historyService.clearHistory();
-//       _refreshHistory();
-//       // Tampilkan SnackBar setelah dihapus
-//       // ignore: use_build_context_synchronously
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Semua riwayat berhasil dihapus!')),
-//       );
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final colorScheme = Theme.of(context).colorScheme;
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Riwayat Pemindaian'),
-//         actions: [
-//           IconButton(
-//             icon: const Icon(Icons.delete_sweep_outlined),
-//             tooltip: 'Hapus Semua Riwayat',
-//             onPressed: _confirmClearHistory,
-//           ),
-//           IconButton(
-//             icon: const Icon(Icons.refresh),
-//             tooltip: 'Segarkan Riwayat',
-//             onPressed: _refreshHistory,
-//           ),
-//         ],
-//       ),
-//       body: FutureBuilder<List<HistoryItem>>(
-//         future: _historyFuture,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             // Tampilkan loading saat data dimuat
-//             return const Center(child: CircularProgressIndicator());
-//           }
-
-//           if (snapshot.hasError) {
-//             // Tampilkan error jika ada masalah koneksi/data
-//             return Center(
-//               child: Padding(
-//                 padding: const EdgeInsets.all(24.0),
-//                 child: Text(
-//                   'Gagal memuat riwayat: ${snapshot.error}',
-//                   style: const TextStyle(color: Colors.red),
-//                 ),
-//               ),
-//             );
-//           }
-
-//           final historyList = snapshot.data ?? [];
-
-//           if (historyList.isEmpty) {
-//             // Tampilkan placeholder jika riwayat kosong
-//             return Center(
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Icon(
-//                     Icons.history_toggle_off,
-//                     size: 100,
-//                     color: colorScheme.outline.withValues(alpha: 0.5),
-//                   ),
-//                   const SizedBox(height: 20),
-//                   Text(
-//                     'Belum ada riwayat pemindaian',
-//                     style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
-//                   ),
-//                   const SizedBox(height: 8),
-//                   Text(
-//                     'Mulai pindai mineral pertama Anda!',
-//                     style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-//                   ),
-//                 ],
-//               ),
-//             );
-//           }
-
-//           // Tampilkan list riwayat
-//           return ListView.builder(
-//             itemCount: historyList.length,
-//             itemBuilder: (context, index) {
-//               final item = historyList[index];
-//               // Pastikan path gambar hanya diproses jika tidak kosong
-//               final File imageFile = File(item.imagePath);
-//               // Cek keberadaan file di sistem lokal
-//               final bool fileExists =
-//                   item.imagePath.isNotEmpty && imageFile.existsSync();
-
-//               return Card(
-//                 margin: const EdgeInsets.symmetric(
-//                   horizontal: 16.0,
-//                   vertical: 8.0,
-//                 ),
-//                 child: ListTile(
-//                   leading: SizedBox(
-//                     width: 60,
-//                     height: 60,
-//                     child: ClipRRect(
-//                       borderRadius: BorderRadius.circular(8.0),
-//                       // Menampilkan thumbnail gambar dari path lokal
-//                       child: fileExists
-//                           ? Image.file(
-//                               imageFile,
-//                               fit: BoxFit.cover,
-//                               errorBuilder: (_, __, ___) =>
-//                                   const Icon(Icons.broken_image, size: 40),
-//                             )
-//                           : Icon(
-//                               Icons.image_not_supported,
-//                               color: colorScheme.outline.withValues(alpha: 0.3),
-//                               size: 40,
-//                             ),
-//                     ),
-//                   ),
-//                   title: Text(
-//                     item.mineralName,
-//                     style: const TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 16,
-//                     ),
-//                   ),
-//                   subtitle: Text(
-//                     // Menggunakan string interpolation untuk subtitle
-//                     'Akurasi: ${(item.confidence * 100).toStringAsFixed(1)}%\nDipindai: ${_formatTimestamp(item.timestamp)}',
-//                     style: const TextStyle(fontSize: 13),
-//                   ),
-//                   isThreeLine: true, // Agar subtitle bisa menampung 2 baris
-//                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-//                   onTap: () {
-//                     // Navigasi ke Mineral Detail Screen
-//                     Navigator.of(context).pushNamed(
-//                       AppRoutes.mineralDetail,
-//                       arguments: {
-//                         'mineralName': item.mineralName,
-//                         'imagePath': item.imagePath,
-//                       },
-//                     );
-//                   },
-//                 ),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

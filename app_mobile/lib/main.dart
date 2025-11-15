@@ -1,30 +1,24 @@
 // main.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Digunakan untuk menyimpan status
+import 'package:shared_preferences/shared_preferences.dart';
 import 'config/routes.dart';
 import 'screens/onboarding_screen.dart';
-import 'screens/home_screen.dart'; // Diimpor karena mungkin menjadi initialScreen
+import 'screens/home_screen.dart';
 import 'theme/theme_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  // Pastikan binding Flutter sudah diinisialisasi
   WidgetsFlutterBinding.ensureInitialized();
-  
-  await Firebase.initializeApp( 
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
-  // Cek apakah onboarding sudah pernah dilihat
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   final prefs = await SharedPreferences.getInstance();
-  final hasCompletedOnboarding =
-      prefs.getBool('onboarding_completed') ?? false; // Default: false
+  final hasCompletedOnboarding = prefs.getBool('onboarding_completed') ?? false;
   final themeModeString = prefs.getString('theme_mode');
   final initialThemeMode = _themeModeFromString(themeModeString);
 
-  // Tentukan layar awal berdasarkan status
   final Widget initialScreen = hasCompletedOnboarding
       ? const HomeScreen()
       : const OnboardingScreen();
