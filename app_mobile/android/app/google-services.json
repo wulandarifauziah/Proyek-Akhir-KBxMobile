@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029542215739",
+    "project_id": "geo-scanner-a3b3a",
+    "storage_bucket": "geo-scanner-a3b3a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029542215739:android:11e856499f422765f05c1e",
+        "android_client_info": {
+          "package_name": "com.example.test_"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuBAXz4P8wf0W4eKamUFN3VB8OG9ykpVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

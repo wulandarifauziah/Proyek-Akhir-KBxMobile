@@ -1,0 +1,3 @@
+00:00 +0: loading D:/Tugas Kuliah/SEMESTER 5/Pemrograman Piranti Bergerak/PA_PBB/test_geo/test_/test/widget_test.dart
+00:00 +0: Counter increments smoke test
+00:00 +1: All tests passed!
