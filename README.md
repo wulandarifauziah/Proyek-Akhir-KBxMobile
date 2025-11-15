@@ -43,7 +43,7 @@ Aplikasi menyertakan katalog lengkap untuk **5 jenis mineral** yang mencakup:
 
 ### ⚙️ Persiapan Backend (Django API)
 
-Server Django harus dijalankan menggunakan `0.0.0.0` untuk fleksibilitas jaringan, dan diakses oleh aplikasi mobile menggunakan **IP lokal laptop Anda**.
+Server Django harus dijalankan menggunakan `0.0.0.0` untuk fleksibilitas jaringan, dan diakses oleh aplikasi mobile menggunakan **IP lokal laptop**.
 
 #### A. Instalasi Dependensi
 1.  **Pindah ke Root Django:**
