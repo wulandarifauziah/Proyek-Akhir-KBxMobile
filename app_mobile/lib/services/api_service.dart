@@ -50,7 +50,8 @@ class ApiService {
 
     // Android emulator needs to map to host machine using 10.0.2.2
     if (Platform.isAndroid) {
-      return Uri.parse('http://10.156.90.86:8000/api/predict-image');
+      // return Uri.parse('http://10.156.90.86:8000/api/predict-image');
+      return Uri.parse('http://192.168.1.5:8000/api/predict-image');
     }
 
     // iOS simulator / desktop
