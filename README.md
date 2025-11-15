@@ -21,7 +21,7 @@ Aplikasi menyediakan dua metode input untuk identifikasi:
 Menampilkan layar hasil prediksi AI yang informatif:
 * **Mineral Utama:** Nama mineral yang ditemukan (contoh: **Hematite**) beserta **Tingkat Kepercayaan (%)**.
 * **Kemungkinan Mineral Lain:** Ditampilkan jika tingkat kepercayaan mineral utama tidak 100%.
-* **Deteksi Gambar Buruk:** Jika gambar tidak terdeteksi sebagai salah satu dari 5 kelas mineral (misalnya foto tidak jelas atau bukan batu), aplikasi akan memberikan hasil dengan tingkat kepercayaan yang sangat rendah.
+* **Deteksi Gambar Buruk:** Jika gambar tidak terdeteksi sebagai salah satu dari 5 kelas mineral, aplikasi akan memberikan hasil dengan tingkat kepercayaan yang sangat rendah.
 
 ### 3. 📖 Katalog & Detail Mineral
 Aplikasi menyertakan katalog lengkap untuk **5 jenis mineral** yang mencakup:
@@ -42,49 +42,57 @@ Aplikasi menyertakan katalog lengkap untuk **5 jenis mineral** yang mencakup:
 ## 🛠️ Panduan Instalasi & Run
 
 ### ⚙️ Persiapan Backend (Django API)
-Anda harus menjalankan server API di laptop menggunakan IP lokal agar dapat diakses oleh aplikasi mobile.
 
-1.  **Pindah ke Folder API:**
+Server Django harus dijalankan menggunakan `0.0.0.0` untuk fleksibilitas jaringan, dan diakses oleh aplikasi mobile menggunakan **IP lokal laptop Anda**.
+
+#### A. Instalasi Dependensi
+1.  **Pindah ke Root Django:**
     ```bash
-    cd api
+    # Pindah ke folder yang berisi manage.py
+    cd api/Synapse/
     ```
-2.  **Instalasi & Aktivasi Environment:**
+2.  ** Aktivasi Environment:**
     ```bash
-    python -m venv venv
-    .\venv\Scripts\activate  # Windows
-    pip install -r requirements.txt
+    conda activate pakbmobile
     ```
-3.  **Jalankan Server:**
+
+#### B. Cara Menjalankan Server
+1.  **Cek IP Aktif:** Gunakan `ipconfig` untuk menemukan alamat IPv4 (misalnya **`192.168.1.5`**).
+2.  **Jalankan Server:** Gunakan `0.0.0.0` agar server mendengarkan di semua interface jaringan.
     ```bash
-    # Ganti [YOUR_LOCAL_IP] dengan IP aktif Anda (misal: 192.168.1.5)
-    python manage.py runserver [YOUR_LOCAL_IP]:8000
+    python manage.py runserver 0.0.0.0:8000
     ```
+    > Server harus tetap berjalan selama Anda menggunakan aplikasi mobile.
 
 ### 📱 Persiapan Frontend (Flutter Mobile)
 
 1.  **Pindah ke Folder Frontend:**
     ```bash
-    cd ../app_mobile
+    cd ../../app_mobile
     ```
-2.  **Konfigurasi Host:** Pastikan *file* konfigurasi API Anda di `app_mobile` disetel ke `http://[YOUR_LOCAL_IP]:8000/api/v1/`.
-3.  **Instalasi & Run:**
+2.  **Konfigurasi Host:** Pastikan *file* konfigurasi API di `app_mobile` disetel ke alamat IP lokal.
+    *Contoh:* `http://192.168.1.5:8000/api/predict-image`
+3.  **Instalasi & Build:**
     ```bash
     flutter pub get
-    flutter run  # Untuk debugging
+    
+    # Jalankan aplikasi 
+    flutter run
     
     # --- ATAU ---
     
-    flutter build apk --release # Untuk file APK mandiri
+    # Build APK untuk distribusi
+    flutter build apk --release
     ```
-    > **Lokasi APK:** `app_mobile/build/app/outputs/flutter-apk/app-release.apk` 
+    > **Lokasi APK:** `app_mobile/build/app/outputs/flutter-apk/app-release.apk`
 
 ---
 
-## 👤 Pengembang
-* **Kelompok:** Kelompok 5
-* **Versi Model ML:** V1.0
+## 📦 Informasi Aplikasi & Tautan
+
+* **Versi Model ML:** **V1.0**
+* **Pengembang:** Kelompok 5
 * **Teknologi:** Flutter, Django, TensorFlow Lite
 
 ### 🔗 Link APK
-
-[link APK](https://drive.google.com/file/d/1g8sOP5tu1SGwQhseIaJ4Yyf9rGL9cxRa/view?usp=drive_link)
+[Download Geo-Scanner APK](https://drive.google.com/file/d/1g8sOP5tu1SGwQhseIaJ4Yyf9rGL9cxRa/view?usp=drive_link)
