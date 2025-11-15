@@ -6,14 +6,12 @@ import 'package:image_picker/image_picker.dart';
 import '../models/prediction_model.dart';
 
 class ApiService {
-  // Langsung pakai domain kamu
   static const String _baseUrl = "https://pakbmobile.loca.lt";
 
   ApiService({http.Client? client}) : _client = client ?? http.Client();
 
   final http.Client _client;
 
-  /// Endpoint langsung ke domain tunneling kamu
   Uri get _predictUri {
     return Uri.parse("$_baseUrl/api/predict-image");
   }
