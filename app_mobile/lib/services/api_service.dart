@@ -94,7 +94,10 @@ import '../models/prediction_model.dart';
 import 'dart:io' show Platform;
 
 class ApiService {
+<<<<<<< HEAD
   // GANTI: Menggunakan URL LocalTunnel Anda
+=======
+>>>>>>> 3887f223b408db8e24cf89f287d463e1a57b811f
   static const String _baseUrl = "https://pakbmobile.loca.lt";
 
   ApiService({http.Client? client}) : _client = client ?? http.Client();
