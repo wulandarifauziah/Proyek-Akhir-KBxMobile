@@ -1,9 +1,5 @@
-// prediction_model.dart
-
-// --- CLASS MODEL UNTUK ALTERNATIF PREDIKSI ---
 class AlternativePrediction {
-  final String
-  mineralName; // ⬅️ DIREVISI: Menggunakan mineralName untuk konsistensi
+  final String mineralName;
   final double confidence;
 
   const AlternativePrediction({
@@ -19,17 +15,15 @@ class AlternativePrediction {
   }
 
   Map<String, dynamic> toJson() => {
-    'mineralName': mineralName, // ⬅️ DIREVISI: Menggunakan mineralName
+    'mineralName': mineralName,
     'confidence': confidence,
   };
 }
 
-// --- CLASS MODEL UNTUK HASIL PREDIKSI UTAMA DARI API ---
-// Mengganti struktur lama dengan struktur yang dibutuhkan oleh HomeScreen dan ResultScreen
 class PredictionResult {
   final String mineralName; // Mineral dengan confidence tertinggi
   final double confidence;
-  final List<AlternativePrediction> alternatives; // List mineral alternatif
+  final List<AlternativePrediction> alternatives;
 
   PredictionResult({
     required this.mineralName,
@@ -162,58 +156,3 @@ class PredictionResult {
     );
   }
 }
-
-// // --- CLASS MODEL UNTUK HISTORY ---
-// class HistoryItem {
-//   final String? id; // ID dari dokumen Firestore
-//   final String mineralName;
-//   final double confidence;
-//   final String imagePath;
-//   final DateTime timestamp;
-
-//   HistoryItem({
-//     this.id,
-//     required this.mineralName,
-//     required this.confidence,
-//     required this.imagePath,
-//     required this.timestamp,
-//   });
-
-//   // Konversi dari Map Firestore Document
-//   factory HistoryItem.fromFirestore(Map<String, dynamic> doc, String id) {
-//     // 'timestamp' may come from Firestore as a Timestamp, or as an int/ISO string
-//     final rawTs = doc['timestamp'];
-//     DateTime ts;
-//     if (rawTs is DateTime) {
-//       ts = rawTs;
-//     } else if (rawTs is int) {
-//       ts = DateTime.fromMillisecondsSinceEpoch(rawTs);
-//     } else if (rawTs is String) {
-//       ts = DateTime.tryParse(rawTs) ?? DateTime.now();
-//     } else if (rawTs is Map && rawTs.containsKey('_seconds')) {
-//       // Firestore web serializes Timestamp as map with _seconds/_nanoseconds
-//       final seconds = rawTs['_seconds'] as int? ?? 0;
-//       ts = DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
-//     } else {
-//       ts = DateTime.now();
-//     }
-
-//     return HistoryItem(
-//       id: id,
-//       mineralName: doc['mineralName'] as String? ?? 'Unknown',
-//       confidence: (doc['confidence'] as num?)?.toDouble() ?? 0.0,
-//       imagePath: doc['imagePath'] as String? ?? '',
-//       timestamp: ts,
-//     );
-//   }
-
-//   // Konversi ke Map (untuk mengirim data ke Firestore) - Digunakan di HistoryService
-//   Map<String, dynamic> toFirestore() {
-//     return {
-//       'mineralName': mineralName,
-//       'confidence': confidence,
-//       'imagePath': imagePath,
-//       // timestamp diatur otomatis oleh FieldValue.serverTimestamp() di service
-//     };
-//   }
-// }
