@@ -29,7 +29,6 @@ ALLOWED_HOSTS = [
     'pakbmobile.loca.lt'
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
