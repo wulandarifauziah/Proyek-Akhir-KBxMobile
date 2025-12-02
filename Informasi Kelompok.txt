@@ -1,0 +1,9 @@
+Nama anggota kelompok 5
+Ananda Lutfiah Febiani (2309106020)
+Tua Delima Sitompul (2309106020)
+Siti Fauziah Wulandari (2309106038)
+
+Judul Proyek: Identifikasi Mineral Batuan Menggunakan Metode Convolutional Neural Network (CNN) Berbasis Mobile 
+
+Dataset: https://www.kaggle.com/datasets/floriangeillon/mineral-photos
+Repository: https://github.com/wulandarifauziah/Proyek-Akhir-KBxMobile
